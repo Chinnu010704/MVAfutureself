@@ -137,14 +137,16 @@ export default function CreateTeenPage() {
 
   if (step === 4 && isPending) {
      return (
-       <div className="w-full h-screen flex flex-col items-center justify-center gap-4 text-center animate-fade-in">
-         <div className="relative">
-           <Loader2 className="h-20 w-20 animate-spin text-primary" />
-           <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl animate-pulse-slow"></div>
-         </div>
-         <h2 className="text-3xl font-bold animate-pulse-slow">Crafting Your Future...</h2>
-         <p className="text-muted-foreground">Finding a suitable profession and generating your image...</p>
-       </div>
+        <div className="w-full h-screen flex flex-col items-center justify-center text-center p-4 bg-background animate-fade-in">
+            <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur-xl opacity-75 animate-pulse-slow"></div>
+                <div className="relative w-32 h-32 flex items-center justify-center bg-background rounded-full">
+                    <Loader2 className="w-16 h-16 text-primary animate-spin" />
+                </div>
+            </div>
+            <h2 className="text-3xl font-bold text-white mt-8 tracking-wide">Crafting Your Future...</h2>
+            <p className="text-lg text-muted-foreground mt-2">Analyzing your potential and generating your vision...</p>
+        </div>
      );
   }
 
@@ -201,14 +203,14 @@ export default function CreateTeenPage() {
                           <FormMessage />
                         </FormItem>
                       )} />
-                      <Button type="submit" className="w-full">Start Quiz <ArrowRight className="ml-2"/></Button>
+                      <Button type="submit" className="w-full">Next <ArrowRight className="ml-2"/></Button>
                     </form>
                   )}
                   {step === 2 && renderQuizContent()}
                   {step === 3 && (
-                     <div className="animate-fade-in">
-                      <CameraCapture onCapture={handleCapture} onRetake={() => setPhotoDataUri(null)} />
-                      <Button variant="outline" onClick={() => { setStep(2); setCurrentQuestionIndex(quizQuestions.length - 1); }} className="mt-4 w-full">Back to Quiz</Button>
+                    <div className="animate-fade-in">
+                        <CameraCapture onCapture={handleCapture} onRetake={() => setPhotoDataUri(null)} />
+                        <Button variant="outline" onClick={() => setStep(2)} className="mt-4 w-full">Back to Quiz</Button>
                     </div>
                   )}
                 </Form>
