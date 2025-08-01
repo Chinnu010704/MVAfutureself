@@ -107,7 +107,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
                 </main>
                 
                 <footer className="text-center pt-4 border-t border-border/50">
-                    <p className="text-xs text-muted-foreground">Powered by Skill Satron Technologies Pvt.Ltd</p>
+                    <p className="text-xs text-muted-foreground">Created by MVAFutureself</p>
                 </footer>
             </div>
         </div>
