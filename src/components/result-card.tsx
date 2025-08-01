@@ -65,7 +65,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
         </div>
 
         {/* This is the card that will be downloaded */}
-        <div ref={cardRef} className="w-full max-w-lg bg-gradient-to-br from-gray-900 via-blue-950 to-purple-900/50 rounded-2xl border border-primary/20 p-1 shadow-2xl">
+        <div ref={cardRef} className="w-full max-w-2xl bg-gradient-to-br from-gray-900 via-blue-950 to-purple-900/50 rounded-2xl border border-primary/20 p-1 shadow-2xl">
             <div className="bg-background rounded-xl p-6 sm:p-8">
                 <header className="flex items-center justify-center pb-4 border-b border-border">
                     <div className="flex items-center space-x-2">
@@ -112,7 +112,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
         </div>
 
 
-        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg mt-4">
+        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mt-4">
             <Button variant="outline" className="w-full h-12 text-base" asChild>
                 <Link href="/">
                     <RefreshCw className="mr-2 h-4 w-4" /> Start New Journey
