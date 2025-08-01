@@ -77,13 +77,16 @@ export default function CreateChildPage() {
 
   if (step === 3 && isPending) {
     return (
-      <div className="w-full h-screen flex flex-col items-center justify-center gap-4 text-center animate-fade-in">
-        <div className="relative">
-          <Loader2 className="h-20 w-20 animate-spin text-primary" />
-          <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl animate-pulse-slow"></div>
+      <div className="w-full h-screen flex flex-col items-center justify-center text-center p-4 bg-background animate-fade-in">
+        <div className="relative w-32 h-32 mb-8">
+          <div className="absolute inset-0 bg-primary rounded-full animate-pulse-slow opacity-50"></div>
+          <div className="absolute inset-2 bg-background rounded-full"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Loader2 className="w-16 h-16 text-primary animate-spin" />
+          </div>
         </div>
-        <h2 className="text-3xl font-bold animate-pulse-slow">Imagining the Future...</h2>
-        <p className="text-muted-foreground">Generating your personalized image. This may take a moment.</p>
+        <h2 className="text-3xl font-bold text-white mb-2">Imagining the Future...</h2>
+        <p className="text-lg text-muted-foreground">Generating your personalized image. This may take a moment.</p>
       </div>
     );
   }
