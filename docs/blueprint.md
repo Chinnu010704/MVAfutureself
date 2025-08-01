@@ -1,4 +1,4 @@
-# **App Name**: FutureSelf AI
+# **App Name**: MVAFutureSelf
 
 ## Core Features:
 
