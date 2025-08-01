@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useRef } from 'react';
+import html2canvas from 'html2canvas';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
@@ -22,11 +23,36 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
   const { toast } = useToast();
 
   const downloadCard = () => {
-    // This is a placeholder for a proper library like html2canvas
-    // as we are not allowed to add new dependencies.
-    toast({
-      title: 'Coming Soon!',
-      description: 'The download functionality is being worked on.',
+    if (!cardRef.current) {
+      toast({
+        title: 'Error',
+        description: 'Could not find the card element to download.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    html2canvas(cardRef.current, {
+      backgroundColor: null, // Use transparent background
+      logging: false,
+      useCORS: true, // Important for external images
+      scale: 2, // Increase resolution
+    }).then((canvas) => {
+      const link = document.createElement('a');
+      link.download = 'mva-future-self.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      toast({
+        title: 'Download Started',
+        description: 'Your Future Self card is being downloaded.',
+      });
+    }).catch((err) => {
+      console.error('Error generating canvas:', err);
+      toast({
+        title: 'Download Failed',
+        description: 'Sorry, we were unable to generate the card for download.',
+        variant: 'destructive',
+      });
     });
   };
 
@@ -67,6 +93,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
                             fill
                             className="object-cover"
                             data-ai-hint="futuristic portrait"
+                            unoptimized // Important for html2canvas to access the image
                         />
                          <div className="absolute top-4 right-4 p-3 bg-black/50 rounded-full backdrop-blur-sm border border-white/10">
                             <Briefcase className="w-6 h-6 text-white"/>
