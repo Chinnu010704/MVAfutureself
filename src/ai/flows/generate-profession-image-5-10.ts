@@ -28,7 +28,7 @@ const GenerateProfessionImage5To10OutputSchema = z.object({
     .describe(
       'The generated image of the student in their chosen profession, as a data URI.'
     ),
-  description: z.string().describe('A description of the generated image. Should be a fancy, 5-line paragraph.'),
+  description: z.string().describe('A description of the generated image. Should be a fancy, 3-line paragraph.'),
 });
 export type GenerateProfessionImage5To10Output = z.infer<typeof GenerateProfessionImage5To10OutputSchema>;
 
@@ -45,9 +45,9 @@ const descriptionPrompt = ai.definePrompt({
     profession: z.string()
   })},
   output: {schema: z.object({
-    description: z.string().describe('A fancy, 5-line paragraph about the student and their profession.')
+    description: z.string().describe('A fancy, 3-line paragraph about the student and their profession.')
   })},
-  prompt: `You are an expert career counselor and storyteller. Generate a fancy, inspiring, 5-line paragraph about a student named {{{name}}} who wants to be a {{{profession}}}. The tone should be uplifting and imaginative.`,
+  prompt: `You are an expert career counselor and storyteller. Generate a fancy, inspiring, 3-line paragraph about a student named {{{name}}} who wants to be a {{{profession}}}. The tone should be uplifting and imaginative.`,
 });
 
 const generateProfessionImage5To10Flow = ai.defineFlow(

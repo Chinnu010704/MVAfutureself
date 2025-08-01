@@ -28,7 +28,7 @@ const GenerateProfessionImage11To17OutputSchema = z.object({
   generatedImageDataUri: z
     .string()
     .describe("The generated image of the student in a profession, as a data URI."),
-  description: z.string().describe('A fancy, 5-line paragraph about the student and their AI-suggested profession.'),
+  description: z.string().describe('A fancy, 3-line paragraph about the student and their AI-suggested profession.'),
 });
 export type GenerateProfessionImage11To17Output = z.infer<typeof GenerateProfessionImage11To17OutputSchema>;
 
@@ -46,9 +46,9 @@ const professionSuggestionPrompt = ai.definePrompt({
     }) },
     output: { schema: z.object({
         profession: z.string().describe('A single profession title that fits the personality.'),
-        description: z.string().describe('A fancy, 5-line paragraph about the student and their AI-suggested profession, explaining why it fits them.')
+        description: z.string().describe('A fancy, 3-line paragraph about the student and their AI-suggested profession, explaining why it fits them.')
     }) },
-    prompt: `You are an expert career counselor and storyteller. Based on the following 10 answers to a personality quiz for a student named {{{name}}}, suggest a single, specific profession that would be a great fit. Then, write a fancy, inspiring, 5-line paragraph about why {{{name}}} would be amazing in that profession, connecting it to their personality traits revealed in the quiz.
+    prompt: `You are an expert career counselor and storyteller. Based on the following 10 answers to a personality quiz for a student named {{{name}}}, suggest a single, specific profession that would be a great fit. Then, write a fancy, inspiring, 3-line paragraph about why {{{name}}} would be amazing in that profession, connecting it to their personality traits revealed in the quiz.
 
 Personality Quiz Answers:
 {{#each personalityAnswers}}

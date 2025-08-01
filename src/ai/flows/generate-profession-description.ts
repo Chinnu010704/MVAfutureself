@@ -20,7 +20,7 @@ const GenerateProfessionDescriptionInputSchema = z.object({
 export type GenerateProfessionDescriptionInput = z.infer<typeof GenerateProfessionDescriptionInputSchema>;
 
 const GenerateProfessionDescriptionOutputSchema = z.object({
-  description: z.string().describe('A short description of the profession.'),
+  description: z.string().describe('A short, 3-line description of the profession.'),
 });
 
 export type GenerateProfessionDescriptionOutput = z.infer<typeof GenerateProfessionDescriptionOutputSchema>;
@@ -29,7 +29,7 @@ const professionDescriptionPrompt = ai.definePrompt({
   name: 'professionDescriptionPrompt',
   input: {schema: GenerateProfessionDescriptionInputSchema},
   output: {schema: GenerateProfessionDescriptionOutputSchema},
-  prompt: `You are an expert career counselor. Generate a short description of the following profession:
+  prompt: `You are an expert career counselor. Generate a short, sweet, 3-line description of the following profession:
 
 Profession: {{{profession}}}`,
 });
