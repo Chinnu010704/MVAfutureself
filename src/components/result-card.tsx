@@ -35,18 +35,18 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
           <div className="inline-block p-3 bg-primary/10 rounded-full mb-2">
             <Sparkles className="w-8 h-8 text-primary" />
           </div>
-          <h2 className="text-3xl font-bold text-white">Chinnu's Future!</h2>
+          <h2 className="text-3xl font-bold text-white">{name}'s Future!</h2>
           <p className="text-muted-foreground">Here's how {name} might look as a {profession || 'professional'}</p>
       </div>
 
-      <Card ref={cardRef} className="w-full max-w-lg bg-black/30 bg-glass border-purple-500/20 shadow-2xl overflow-hidden">
+      <Card ref={cardRef} className="w-full max-w-2xl bg-black/30 bg-glass border-purple-500/20 shadow-2xl overflow-hidden">
         <CardContent className="p-6">
             <div className="text-center mb-4">
-                <h3 className="text-xl font-bold text-primary">Chinnu as a {profession || 'Future Professional'}</h3>
+                <h3 className="text-xl font-bold text-primary">{name} as a {profession || 'Future Professional'}</h3>
                 <p className="text-sm text-muted-foreground">Look how amazing {name} looks as a {profession}</p>
             </div>
           
-            <div className="relative aspect-square w-full max-w-sm mx-auto rounded-xl bg-muted/30 overflow-hidden flex items-center justify-center p-4 shadow-inner">
+            <div className="relative aspect-square w-full max-w-md mx-auto rounded-xl bg-muted/30 overflow-hidden flex items-center justify-center p-4 shadow-inner">
                 <Image
                     src={imageUrl}
                     alt={`AI generated image for ${name}`}
@@ -75,7 +75,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
         </CardContent>
       </Card>
 
-      <div className="flex gap-4 w-full max-w-lg">
+      <div className="flex gap-4 w-full max-w-2xl">
         <Link href="/" className="w-full">
             <Button variant="outline" className="w-full h-12 text-base">
                 <RefreshCw className="mr-2 h-4 w-4" /> Start New Journey
@@ -89,4 +89,3 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
   );
 }
 
-    
