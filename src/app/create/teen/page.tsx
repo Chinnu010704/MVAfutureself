@@ -110,7 +110,6 @@ export default function CreateTeenPage() {
     switch(step) {
       case 1:
         return (
-          <Form {...form}>
             <form onSubmit={form.handleSubmit(processDetails)} className="space-y-8 animate-fade-in">
               <FormField control={form.control} name="name" render={({ field }) => (
                 <FormItem>
@@ -133,7 +132,6 @@ export default function CreateTeenPage() {
               )} />
               <Button type="submit" className="w-full">Start Quiz <ArrowRight className="ml-2"/></Button>
             </form>
-          </Form>
         );
       case 2:
         const question = quizQuestions[currentQuestionIndex];
@@ -216,9 +214,11 @@ export default function CreateTeenPage() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                <div className="min-h-[400px] flex flex-col justify-center">
-                    {renderStepContent()}
-                </div>
+                  <div className="min-h-[400px] flex flex-col justify-center">
+                    <Form {...form}>
+                      {renderStepContent()}
+                    </Form>
+                  </div>
                 </CardContent>
             </Card>
         </>
