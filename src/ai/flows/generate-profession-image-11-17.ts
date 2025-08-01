@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Generates an image of a student aged 11-17 in a profession that matches their personality.
@@ -29,6 +30,7 @@ const GenerateProfessionImage11To17OutputSchema = z.object({
     .string()
     .describe("The generated image of the student in a profession, as a data URI."),
   description: z.string().describe('A fancy, 3-line paragraph about the student and their AI-suggested profession.'),
+  profession: z.string().describe('The profession suggested by the AI.')
 });
 export type GenerateProfessionImage11To17Output = z.infer<typeof GenerateProfessionImage11To17OutputSchema>;
 
@@ -94,6 +96,9 @@ const generateProfessionImage11To17Flow = ai.defineFlow(
     return {
       generatedImageDataUri: media.url,
       description,
+      profession,
     };
   }
 );
+
+    

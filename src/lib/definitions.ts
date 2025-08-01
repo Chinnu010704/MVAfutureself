@@ -1,3 +1,4 @@
+
 import { z } from 'zod';
 
 export const childFormSchema = z.object({
@@ -18,4 +19,7 @@ export type QuizAnswers = string[];
 export interface GenerationResult {
   generatedImage: string;
   description: string;
+  profession?: string;
 }
+
+    

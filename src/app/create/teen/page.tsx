@@ -155,13 +155,14 @@ export default function CreateTeenPage() {
         return (
           <div className="animate-fade-in text-center">
             {isPending && (
-              <div className="flex flex-col items-center justify-center gap-4">
-                <Loader2 className="h-16 w-16 animate-spin text-primary" />
-                <p className="text-muted-foreground">Finding a suitable profession and generating image...</p>
-              </div>
+                <div className="flex flex-col items-center justify-center gap-4 text-center">
+                    <Loader2 className="h-16 w-16 animate-spin text-primary" />
+                    <h2 className="text-2xl font-bold">Crafting Your Future...</h2>
+                    <p className="text-muted-foreground">Finding a suitable profession and generating image...</p>
+                </div>
             )}
             {result && formData && (
-              <ResultCard name={formData.name} imageUrl={result.generatedImage} description={result.description} />
+              <ResultCard name={formData.name} imageUrl={result.generatedImage} description={result.description} profession={result.profession} />
             )}
           </div>
         );
@@ -172,23 +173,34 @@ export default function CreateTeenPage() {
 
   return (
     <div className="container mx-auto p-4 sm:p-6 md:p-8 flex flex-col items-center">
-      <header className="w-full max-w-3xl mt-24 mb-8 text-center">
-        <h1 className="text-3xl font-bold text-primary">Future Self (Ages 11-17)</h1>
-      </header>
-      
-      <Card className="w-full max-w-3xl bg-black/30 bg-glass border-purple-500/20">
-        <CardHeader>
-            <div className="flex justify-between items-center">
-                <CardTitle className="text-2xl">{getStepTitle()}</CardTitle>
-                <span className="text-sm font-medium text-muted-foreground">Step {step} / {totalSteps}</span>
-            </div>
-        </CardHeader>
-        <CardContent>
-          <div className="min-h-[400px] flex flex-col justify-center">
+       {step < 4 && (
+        <>
+            <header className="w-full max-w-3xl mt-24 mb-8 text-center">
+                <h1 className="text-3xl font-bold text-primary">Future Self (Ages 11-17)</h1>
+            </header>
+            
+            <Card className="w-full max-w-3xl bg-black/30 bg-glass border-purple-500/20">
+                <CardHeader>
+                    <div className="flex justify-between items-center">
+                        <CardTitle className="text-2xl">{getStepTitle()}</CardTitle>
+                        <span className="text-sm font-medium text-muted-foreground">Step {step} / {totalSteps}</span>
+                    </div>
+                </CardHeader>
+                <CardContent>
+                <div className="min-h-[400px] flex flex-col justify-center">
+                    {renderStepContent()}
+                </div>
+                </CardContent>
+            </Card>
+        </>
+       )}
+       {step === 4 && (
+         <div className="w-full mt-24">
             {renderStepContent()}
-          </div>
-        </CardContent>
-      </Card>
+         </div>
+       )}
     </div>
   );
 }
+
+    

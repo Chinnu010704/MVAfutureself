@@ -20,7 +20,7 @@ export async function generateForChild(
       throw new Error('Image generation failed or returned no image.');
     }
 
-    return { data: { generatedImage: result.generatedImage, description: result.description }, error: null };
+    return { data: { generatedImage: result.generatedImage, description: result.description, profession: values.profession }, error: null };
   } catch (err) {
     console.error('[CHILD GENERATION ERROR]', err);
     const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
@@ -44,10 +44,12 @@ export async function generateForTeen(
       throw new Error('Image generation failed or returned no image.');
     }
 
-    return { data: { generatedImage: result.generatedImageDataUri, description: result.description }, error: null };
+    return { data: { generatedImage: result.generatedImageDataUri, description: result.description, profession: result.profession }, error: null };
   } catch (err) {
     console.error('[TEEN GENERATION ERROR]', err);
     const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
     return { data: null, error: `Failed to generate image: ${errorMessage}` };
   }
 }
+
+    
