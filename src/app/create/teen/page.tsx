@@ -155,11 +155,14 @@ export default function CreateTeenPage() {
         return (
           <div className="animate-fade-in text-center">
             {isPending && (
-                <div className="flex flex-col items-center justify-center gap-4 text-center">
-                    <Loader2 className="h-16 w-16 animate-spin text-primary" />
-                    <h2 className="text-2xl font-bold">Crafting Your Future...</h2>
-                    <p className="text-muted-foreground">Finding a suitable profession and generating image...</p>
-                </div>
+                <div className="flex flex-col items-center justify-center gap-4 text-center animate-fade-in">
+                 <div className="relative">
+                   <Loader2 className="h-20 w-20 animate-spin text-primary" />
+                   <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl animate-pulse-slow"></div>
+                 </div>
+                 <h2 className="text-3xl font-bold animate-pulse-slow">Crafting Your Future...</h2>
+                 <p className="text-muted-foreground">Finding a suitable profession and generating your image...</p>
+               </div>
             )}
             {result && formData && (
               <ResultCard name={formData.name} imageUrl={result.generatedImage} description={result.description} profession={result.profession} />

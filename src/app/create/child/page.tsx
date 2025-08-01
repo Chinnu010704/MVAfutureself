@@ -145,10 +145,13 @@ export default function CreateChildPage() {
       {step === 3 && (
         <div className="w-full mt-24">
           {isPending && (
-            <div className="flex flex-col items-center justify-center gap-4 text-center">
-              <Loader2 className="h-16 w-16 animate-spin text-primary" />
-              <h2 className="text-2xl font-bold">Imagining the Future...</h2>
-              <p className="text-muted-foreground">Generating image... This may take a moment.</p>
+             <div className="flex flex-col items-center justify-center gap-4 text-center animate-fade-in">
+              <div className="relative">
+                <Loader2 className="h-20 w-20 animate-spin text-primary" />
+                <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl animate-pulse-slow"></div>
+              </div>
+              <h2 className="text-3xl font-bold animate-pulse-slow">Imagining the Future...</h2>
+              <p className="text-muted-foreground">Generating your personalized image. This may take a moment.</p>
             </div>
           )}
           {result && formData && (
