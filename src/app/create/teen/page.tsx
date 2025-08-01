@@ -33,6 +33,10 @@ export default function CreateTeenPage() {
   const form = useForm<TeenFormValues>({
     resolver: zodResolver(teenFormSchema),
     mode: 'onChange',
+    defaultValues: {
+      name: '',
+      gender: undefined,
+    },
   });
 
   const processDetails = (data: TeenFormValues) => {

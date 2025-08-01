@@ -31,6 +31,11 @@ export default function CreateChildPage() {
   const form = useForm<ChildFormValues>({
     resolver: zodResolver(childFormSchema),
     mode: 'onChange',
+    defaultValues: {
+      name: '',
+      gender: undefined,
+      profession: '',
+    },
   });
 
   const processForm = (data: ChildFormValues) => {
