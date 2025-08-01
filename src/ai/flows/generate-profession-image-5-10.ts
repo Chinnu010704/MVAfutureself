@@ -28,7 +28,7 @@ const GenerateProfessionImage5To10OutputSchema = z.object({
     .describe(
       'The generated image of the student in their chosen profession, as a data URI.'
     ),
-  description: z.string().describe('A description of the generated image.'),
+  description: z.string().describe('A description of the generated image. Should be a fancy, 5-line paragraph.'),
 });
 export type GenerateProfessionImage5To10Output = z.infer<typeof GenerateProfessionImage5To10OutputSchema>;
 
@@ -38,23 +38,16 @@ export async function generateProfessionImage5To10(
   return generateProfessionImage5To10Flow(input);
 }
 
-const generateProfessionPrompt = ai.definePrompt({
-  name: 'generateProfessionPrompt',
-  input: {schema: GenerateProfessionImage5To10InputSchema},
-  output: {schema: GenerateProfessionImage5To10OutputSchema},
-  prompt: `You are an AI that generates images of students in their chosen profession.
-
-  The student's name is {{{name}}}.
-  The student's chosen profession is {{{profession}}}.
-
-  Generate an image of the student in their chosen profession, making sure the field, dressing, environment and equipments are matched with professional.
-
-  Here is the student's photo: {{media url=photoDataUri}}
-
-  Also generate a short description of the image.
-
-  Your output should contain the generated image as a data URI and the description.
-  `,
+const descriptionPrompt = ai.definePrompt({
+  name: 'generateProfessionDescription5To10Prompt',
+  input: {schema: z.object({
+    name: z.string(),
+    profession: z.string()
+  })},
+  output: {schema: z.object({
+    description: z.string().describe('A fancy, 5-line paragraph about the student and their profession.')
+  })},
+  prompt: `You are an expert career counselor and storyteller. Generate a fancy, inspiring, 5-line paragraph about a student named {{{name}}} who wants to be a {{{profession}}}. The tone should be uplifting and imaginative.`,
 });
 
 const generateProfessionImage5To10Flow = ai.defineFlow(
@@ -64,24 +57,33 @@ const generateProfessionImage5To10Flow = ai.defineFlow(
     outputSchema: GenerateProfessionImage5To10OutputSchema,
   },
   async input => {
-    const {media} = await ai.generate({
-      model: 'googleai/gemini-2.0-flash-preview-image-generation',
-      prompt: [
-        {text: `Generate an image of a student named ${input.name} in the profession of a  ${input.profession}`},
-        {media: {url: input.photoDataUri}},
-      ],
-      config: {
-        responseModalities: ['TEXT', 'IMAGE'],
-      },
-    });
-
-    const {output} = await generateProfessionPrompt(input);
-    if (!media?.url) {
+    const [imageGenResponse, descriptionGenResponse] = await Promise.all([
+      ai.generate({
+        model: 'googleai/gemini-2.0-flash-preview-image-generation',
+        prompt: [
+          {text: `Generate a realistic image of a young student named ${input.name} as a ${input.profession}. The image should be high quality and show the student in an environment and attire suitable for the profession.`},
+          {media: {url: input.photoDataUri}},
+        ],
+        config: {
+          responseModalities: ['TEXT', 'IMAGE'],
+        },
+      }),
+      descriptionPrompt({name: input.name, profession: input.profession})
+    ]);
+    
+    const generatedImage = imageGenResponse.media;
+    if (!generatedImage?.url) {
       throw new Error('Image generation failed');
     }
+
+    const description = descriptionGenResponse.output?.description;
+    if (!description) {
+        throw new Error('Description generation failed');
+    }
+
     return {
-      generatedImage: media.url,
-      description: output?.description ?? `A photo of ${input.name} as a ${input.profession}.`,
+      generatedImage: generatedImage.url,
+      description: description,
     };
   }
 );

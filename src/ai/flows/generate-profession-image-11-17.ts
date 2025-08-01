@@ -28,7 +28,7 @@ const GenerateProfessionImage11To17OutputSchema = z.object({
   generatedImageDataUri: z
     .string()
     .describe("The generated image of the student in a profession, as a data URI."),
-  description: z.string().describe('A description of the generated image.'),
+  description: z.string().describe('A fancy, 5-line paragraph about the student and their AI-suggested profession.'),
 });
 export type GenerateProfessionImage11To17Output = z.infer<typeof GenerateProfessionImage11To17OutputSchema>;
 
@@ -38,23 +38,23 @@ export async function generateProfessionImage11To17(
   return generateProfessionImage11To17Flow(input);
 }
 
-const prompt = ai.definePrompt({
-  name: 'generateProfessionImage11To17Prompt',
-  input: {schema: GenerateProfessionImage11To17InputSchema},
-  output: {schema: GenerateProfessionImage11To17OutputSchema},
-  prompt: `You are an AI that generates images of students in professions that match their personality.
+const professionSuggestionPrompt = ai.definePrompt({
+    name: 'professionSuggestionPrompt',
+    input: { schema: z.object({
+        name: z.string(),
+        personalityAnswers: z.array(z.string()),
+    }) },
+    output: { schema: z.object({
+        profession: z.string().describe('A single profession title that fits the personality.'),
+        description: z.string().describe('A fancy, 5-line paragraph about the student and their AI-suggested profession, explaining why it fits them.')
+    }) },
+    prompt: `You are an expert career counselor and storyteller. Based on the following 10 answers to a personality quiz for a student named {{{name}}}, suggest a single, specific profession that would be a great fit. Then, write a fancy, inspiring, 5-line paragraph about why {{{name}}} would be amazing in that profession, connecting it to their personality traits revealed in the quiz.
 
-  The student's name is {{{name}}}.
-  Here is their photo: {{media url=photoDataUri}}
-  Here are the answers to their personality questionnaire:
-  {{#each personalityAnswers}}
-  - {{{this}}}
-  {{/each}}
-
-  Based on this information, generate an image of the student in a profession that matches their personality.  The image should match the profession with the field, dressing, environment, and equipment appropriate for the profession.
-
-  Also, generate a short description of the image.
-  `,
+Personality Quiz Answers:
+{{#each personalityAnswers}}
+- {{{this}}}
+{{/each}}
+`
 });
 
 const generateProfessionImage11To17Flow = ai.defineFlow(
@@ -64,7 +64,36 @@ const generateProfessionImage11To17Flow = ai.defineFlow(
     outputSchema: GenerateProfessionImage11To17OutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    return output!;
+    const professionSuggestion = await professionSuggestionPrompt({
+        name: input.name,
+        personalityAnswers: input.personalityAnswers,
+    });
+
+    const profession = professionSuggestion.output?.profession;
+    const description = professionSuggestion.output?.description;
+
+    if (!profession || !description) {
+        throw new Error('Failed to generate profession suggestion or description.');
+    }
+
+    const { media } = await ai.generate({
+        model: 'googleai/gemini-2.0-flash-preview-image-generation',
+        prompt: [
+            {text: `Generate a realistic image of a teenage student named ${input.name} as a ${profession}. The image should be high quality and show the student in an environment and attire suitable for that profession.`},
+            {media: {url: input.photoDataUri}},
+        ],
+        config: {
+            responseModalities: ['TEXT', 'IMAGE'],
+        },
+    });
+
+    if (!media?.url) {
+        throw new Error('Image generation failed');
+    }
+
+    return {
+      generatedImageDataUri: media.url,
+      description,
+    };
   }
 );
