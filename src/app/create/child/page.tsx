@@ -73,11 +73,11 @@ export default function CreateChildPage() {
 
   return (
     <div className="container mx-auto p-4 sm:p-6 md:p-8 flex flex-col items-center">
-      <header className="w-full max-w-2xl mt-8 mb-8 text-center">
+      <header className="w-full max-w-2xl mt-24 mb-8 text-center">
         <h1 className="text-3xl font-bold text-primary">Future Self (Ages 5-10)</h1>
       </header>
 
-      <Card className="w-full max-w-2xl">
+      <Card className="w-full max-w-2xl bg-black/30 bg-glass border-purple-500/20">
         <CardHeader>
           <CardTitle>Step {step} of {totalSteps}</CardTitle>
           <CardDescription>

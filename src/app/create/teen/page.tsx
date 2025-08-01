@@ -170,11 +170,11 @@ export default function CreateTeenPage() {
 
   return (
     <div className="container mx-auto p-4 sm:p-6 md:p-8 flex flex-col items-center">
-      <header className="w-full max-w-3xl mt-8 mb-8 text-center">
+      <header className="w-full max-w-3xl mt-24 mb-8 text-center">
         <h1 className="text-3xl font-bold text-primary">Future Self (Ages 11-17)</h1>
       </header>
       
-      <Card className="w-full max-w-3xl">
+      <Card className="w-full max-w-3xl bg-black/30 bg-glass border-purple-500/20">
         <CardHeader>
           <CardTitle>Step {step} of {totalSteps}</CardTitle>
           <CardDescription>
