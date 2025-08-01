@@ -56,7 +56,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
 
   return (
     <div className="flex flex-col items-center gap-8 w-full animate-fade-in">
-        <div className="w-full max-w-3xl text-center">
+        <div className="w-full max-w-md text-center">
             <div className="inline-block p-3 bg-primary/10 rounded-full mb-2">
                 <Sparkles className="w-8 h-8 text-primary" />
             </div>
@@ -67,7 +67,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
         {/* This is the card that will be downloaded */}
         <div 
           ref={cardRef} 
-          className="w-full max-w-3xl bg-gradient-to-br from-gray-950 via-blue-950 to-purple-900/50 rounded-2xl border border-primary/20 p-1 shadow-2xl aspect-[9/16] flex flex-col"
+          className="w-full max-w-md bg-gradient-to-br from-gray-950 via-blue-950 to-purple-900/50 rounded-2xl border border-primary/20 p-1 shadow-2xl"
         >
             <div className="bg-background/80 backdrop-blur-sm rounded-xl p-6 sm:p-8 flex flex-col flex-grow">
                 <header className="flex items-center justify-center pb-4 border-b border-border/50">
@@ -83,12 +83,12 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
                 </header>
 
                 <main className="my-6 sm:my-8 flex flex-col items-center justify-center flex-grow">
-                    <div className="w-full rounded-lg overflow-hidden shadow-lg border border-border/50 aspect-[9/16]">
+                    <div className="w-full rounded-lg overflow-hidden shadow-lg border border-border/50 aspect-[3/4]">
                         <Image
                             src={imageUrl}
                             alt={`AI generated image for ${name}`}
-                            width={1024}
-                            height={768}
+                            width={768}
+                            height={1024}
                             className="w-full h-full object-cover"
                             data-ai-hint="futuristic portrait"
                             unoptimized // Important for html2canvas to access the image
@@ -113,7 +113,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
         </div>
 
 
-        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-3xl mt-4">
+        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md mt-4">
             <Button variant="outline" className="w-full h-12 text-base" asChild>
                 <Link href="/">
                     <RefreshCw className="mr-2 h-4 w-4" /> Start New Journey
