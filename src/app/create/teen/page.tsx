@@ -80,15 +80,6 @@ export default function CreateTeenPage() {
       setResult(data);
     });
   };
-
-  const handleStartOver = () => {
-    setStep(1);
-    setFormData(null);
-    setQuizAnswers(Array(quizQuestions.length).fill(''));
-    setPhotoDataUri(null);
-    setResult(null);
-    form.reset();
-  };
   
   const getStepTitle = () => {
     switch (step) {
@@ -170,7 +161,7 @@ export default function CreateTeenPage() {
               </div>
             )}
             {result && formData && (
-              <ResultCard name={formData.name} imageUrl={result.generatedImage} description={result.description} onStartOver={handleStartOver} />
+              <ResultCard name={formData.name} imageUrl={result.generatedImage} description={result.description} />
             )}
           </div>
         );

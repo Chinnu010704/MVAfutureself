@@ -62,14 +62,6 @@ export default function CreateChildPage() {
     });
   };
 
-  const handleStartOver = () => {
-    setStep(1);
-    setFormData(null);
-    setPhotoDataUri(null);
-    setResult(null);
-    form.reset();
-  };
-
   const getStepTitle = () => {
     switch (step) {
       case 1:
@@ -152,11 +144,10 @@ export default function CreateChildPage() {
                   </div>
                 )}
                 {result && formData && (
-                  <ResultCard 
+                  <ResultCard
                     name={formData.name}
                     imageUrl={result.generatedImage}
                     description={result.description}
-                    onStartOver={handleStartOver}
                   />
                 )}
               </div>

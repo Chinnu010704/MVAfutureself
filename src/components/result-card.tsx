@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef } from 'react';
@@ -6,15 +7,15 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import Image from 'next/image';
 import { Download, RefreshCw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
 interface ResultCardProps {
   name: string;
   imageUrl: string;
   description: string;
-  onStartOver: () => void;
 }
 
-export function ResultCard({ name, imageUrl, description, onStartOver }: ResultCardProps) {
+export function ResultCard({ name, imageUrl, description }: ResultCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -149,9 +150,11 @@ export function ResultCard({ name, imageUrl, description, onStartOver }: ResultC
       </div>
 
       <div className="flex gap-4 w-full max-w-lg">
-        <Button variant="outline" onClick={onStartOver} className="w-full">
-          <RefreshCw className="mr-2 h-4 w-4" /> Start Over
-        </Button>
+        <Link href="/" className="w-full">
+            <Button variant="outline" className="w-full">
+                <RefreshCw className="mr-2 h-4 w-4" /> Start Over
+            </Button>
+        </Link>
         <Button onClick={downloadCard} className="w-full">
           <Download className="mr-2 h-4 w-4" /> Download Card
         </Button>
