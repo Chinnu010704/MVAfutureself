@@ -11,7 +11,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { teenFormSchema, type TeenFormValues, type GenerationResult, type QuizAnswers } from '@/lib/definitions';
 import { quizQuestions } from '@/lib/quiz';
@@ -91,6 +90,16 @@ export default function CreateTeenPage() {
     form.reset();
   };
   
+  const getStepTitle = () => {
+    switch (step) {
+        case 1: return "Basic Information";
+        case 2: return "Personality Quiz";
+        case 3: return "Get a Photo";
+        case 4: return isPending ? "Crafting Your Future..." : "Your Future Self!";
+        default: return "";
+    }
+  }
+
   const renderStepContent = () => {
     switch(step) {
       case 1:
@@ -178,14 +187,10 @@ export default function CreateTeenPage() {
       
       <Card className="w-full max-w-3xl bg-black/30 bg-glass border-purple-500/20">
         <CardHeader>
-          <CardTitle>Step {step} of {totalSteps}</CardTitle>
-          <CardDescription>
-            {step === 1 && "Let's start with some basic information."}
-            {step === 2 && "Answer these questions to find a career that suits you."}
-            {step === 3 && "Now, let's get a photo for the AI."}
-            {step === 4 && (isPending ? "Our AI is crafting your professional future..." : "Presenting your Future Self!")}
-          </CardDescription>
-          <Progress value={(step / totalSteps) * 100} className="mt-2" />
+            <div className="flex justify-between items-center">
+                <CardTitle className="text-2xl">{getStepTitle()}</CardTitle>
+                <span className="text-sm font-medium text-muted-foreground">Step {step} / {totalSteps}</span>
+            </div>
         </CardHeader>
         <CardContent>
           <div className="min-h-[400px] flex flex-col justify-center">

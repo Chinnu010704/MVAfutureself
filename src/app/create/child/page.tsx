@@ -11,7 +11,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { childFormSchema, type ChildFormValues, type GenerationResult } from '@/lib/definitions';
 import { generateForChild } from '@/lib/actions';
@@ -71,6 +70,19 @@ export default function CreateChildPage() {
     form.reset();
   };
 
+  const getStepTitle = () => {
+    switch (step) {
+      case 1:
+        return "About the Young Visionary";
+      case 2:
+        return "Capture a Photo";
+      case 3:
+        return isPending ? "Imagining the Future..." : "Your Future Self!";
+      default:
+        return "";
+    }
+  }
+
   return (
     <div className="container mx-auto p-4 sm:p-6 md:p-8 flex flex-col items-center">
       <header className="w-full max-w-2xl mt-24 mb-8 text-center">
@@ -79,13 +91,10 @@ export default function CreateChildPage() {
 
       <Card className="w-full max-w-2xl bg-black/30 bg-glass border-purple-500/20">
         <CardHeader>
-          <CardTitle>Step {step} of {totalSteps}</CardTitle>
-          <CardDescription>
-            {step === 1 && "Tell us about the young visionary."}
-            {step === 2 && "Capture a photo for the AI."}
-            {step === 3 && (isPending ? "Our AI is imagining the future..." : "Here is your Future Self!")}
-          </CardDescription>
-          <Progress value={(step / totalSteps) * 100} className="mt-2" />
+          <div className="flex justify-between items-center">
+            <CardTitle className="text-2xl">{getStepTitle()}</CardTitle>
+            <span className="text-sm font-medium text-muted-foreground">Step {step} / {totalSteps}</span>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="min-h-[400px] flex flex-col justify-center">
