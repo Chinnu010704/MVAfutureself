@@ -1,3 +1,4 @@
+
 "use client";
 
 import { BrainCircuit, Briefcase, Sparkles, ArrowRight, Bot } from 'lucide-react';
