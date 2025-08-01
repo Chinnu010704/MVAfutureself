@@ -1,4 +1,4 @@
-# **App Name**: MVAFutureSelf
+# **App Name**: MVAFutureself
 
 ## Core Features:
 
@@ -12,9 +12,9 @@
 
 ## Style Guidelines:
 
-- Primary color: Strong purple (#6200EE), symbolizing vision and future, in keeping with the app's goal. 
-- Background color: Very light purple (#F3E5F5), close in hue to the primary, for a calm and uncluttered feel.
-- Accent color: Blue (#3700B3), an analogous color to the primary, but less saturated.
+- Primary color: Blue (#0070F3), symbolizing professionalism and clarity, in keeping with the app's goal. 
+- Secondary color: Green (#00B341), representing growth and development.
+- Accent color: Yellow (#FFD700), signifying optimism and potential.
 - Body and headline font: 'Inter', a sans-serif with a neutral and modern appearance that supports a wide range of uses.
 - Use a consistent style of simple line icons relevant to professions and personality traits.
 - Employ a clean, modern layout using React, Tailwind CSS, and Bootstrap, ensuring responsiveness across devices.
