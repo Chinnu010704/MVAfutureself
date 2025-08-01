@@ -4,8 +4,7 @@
 import React, { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, ArrowRight, Loader2, User, VenusMars, ListChecks } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowRight, Loader2, User } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -103,7 +102,7 @@ export default function CreateTeenPage() {
               )} />
               <FormField control={form.control} name="gender" render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="flex items-center gap-2"><VenusMars/> Gender</FormLabel>
+                  <FormLabel>Gender</FormLabel>
                   <FormControl>
                     <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-4">
                       <FormItem className="flex items-center space-x-3 space-y-0"><FormControl><RadioGroupItem value="male" /></FormControl><FormLabel className="font-normal">Male</FormLabel></FormItem>
@@ -166,15 +165,9 @@ export default function CreateTeenPage() {
   }
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 md:p-8 min-h-screen flex flex-col items-center">
-      <header className="w-full max-w-3xl mb-8 flex items-center justify-between">
-        <Link href="/" className="p-2 rounded-full hover:bg-primary/10 transition-colors">
-          <ArrowLeft className="h-6 w-6 text-primary" />
-        </Link>
-        <div className="flex-1 text-center">
-            <h1 className="text-3xl font-bold text-primary">Future Self (Ages 11-17)</h1>
-        </div>
-        <div className="w-10"></div>
+    <div className="container mx-auto p-4 sm:p-6 md:p-8 flex flex-col items-center">
+      <header className="w-full max-w-3xl mt-8 mb-8 text-center">
+        <h1 className="text-3xl font-bold text-primary">Future Self (Ages 11-17)</h1>
       </header>
       
       <Card className="w-full max-w-3xl">
