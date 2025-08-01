@@ -4,13 +4,14 @@
 import React, { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, Loader2, User } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Loader2, User } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { teenFormSchema, type TeenFormValues, type GenerationResult, type QuizAnswers } from '@/lib/definitions';
 import { quizQuestions } from '@/lib/quiz';
@@ -22,6 +23,7 @@ const totalSteps = 4;
 
 export default function CreateTeenPage() {
   const [step, setStep] = useState(1);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [formData, setFormData] = useState<TeenFormValues | null>(null);
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>(Array(quizQuestions.length).fill(''));
   const [photoDataUri, setPhotoDataUri] = useState<string | null>(null);
@@ -43,22 +45,35 @@ export default function CreateTeenPage() {
     setStep(2);
   };
 
-  const handleQuizAnswer = (questionIndex: number, answer: string) => {
+  const handleQuizAnswer = (answer: string) => {
     const newAnswers = [...quizAnswers];
-    newAnswers[questionIndex] = answer;
+    newAnswers[currentQuestionIndex] = answer;
     setQuizAnswers(newAnswers);
   };
-  
-  const submitQuiz = () => {
-    if (quizAnswers.some(answer => answer === '')) {
+
+  const handleNextQuestion = () => {
+    if (quizAnswers[currentQuestionIndex] === '') {
       toast({
-        title: "Incomplete Quiz",
-        description: "Please answer all questions before proceeding.",
+        title: "No Answer Selected",
+        description: "Please select an answer to continue.",
         variant: "destructive",
       });
       return;
     }
-    setStep(3);
+    if (currentQuestionIndex < quizQuestions.length - 1) {
+      setCurrentQuestionIndex(prev => prev + 1);
+    } else {
+      // Last question, move to next step
+      setStep(3);
+    }
+  };
+
+  const handlePreviousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(prev => prev - 1);
+    } else {
+      setStep(1);
+    }
   };
 
   const handleCapture = (dataUri: string) => {
@@ -121,34 +136,37 @@ export default function CreateTeenPage() {
           </Form>
         );
       case 2:
+        const question = quizQuestions[currentQuestionIndex];
+        const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
         return (
-          <Form {...form}>
-            <form onSubmit={e => { e.preventDefault(); submitQuiz(); }} className="space-y-6 animate-fade-in">
-                {quizQuestions.map((q, index) => (
-                  <div key={index}>
-                    <p className="font-medium mb-2">{index + 1}. {q.question}</p>
-                    <RadioGroup onValueChange={(value) => handleQuizAnswer(index, value)} value={quizAnswers[index]} className="flex flex-col space-y-1">
-                      {q.options.map((option, optIndex) => (
-                        <FormItem key={optIndex} className="flex items-center space-x-3 space-y-0">
+          <div className="space-y-6 animate-fade-in">
+              <div>
+                  <Progress value={progress} className="mb-4" />
+                  <p className="font-medium mb-2 text-lg">{currentQuestionIndex + 1}. {question.question}</p>
+                  <RadioGroup onValueChange={handleQuizAnswer} value={quizAnswers[currentQuestionIndex]} className="flex flex-col space-y-2 mt-4">
+                      {question.options.map((option, optIndex) => (
+                      <FormItem key={optIndex} className="flex items-center space-x-3 space-y-0 p-3 rounded-lg border border-transparent transition-all has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary/10">
                           <FormControl><RadioGroupItem value={option} /></FormControl>
-                          <FormLabel className="font-normal">{option}</FormLabel>
-                        </FormItem>
+                          <FormLabel className="font-normal cursor-pointer flex-1">{option}</FormLabel>
+                      </FormItem>
                       ))}
-                    </RadioGroup>
-                  </div>
-                ))}
-                <div className='flex gap-4 pt-4'>
-                    <Button variant="outline" onClick={() => setStep(1)} className="w-full">Back</Button>
-                    <Button type="submit" className="w-full">Next <ArrowRight className="ml-2"/></Button>
-                </div>
-            </form>
-          </Form>
+                  </RadioGroup>
+              </div>
+              <div className='flex gap-4 pt-4'>
+                  <Button variant="outline" onClick={handlePreviousQuestion} className="w-full">
+                    <ArrowLeft className="mr-2"/> Back
+                  </Button>
+                  <Button onClick={handleNextQuestion} className="w-full">
+                    {currentQuestionIndex < quizQuestions.length - 1 ? 'Next' : 'Finish Quiz'} <ArrowRight className="ml-2"/>
+                  </Button>
+              </div>
+          </div>
         );
       case 3:
         return (
             <div className="animate-fade-in">
                 <CameraCapture onCapture={handleCapture} onRetake={() => setPhotoDataUri(null)} />
-                <Button variant="outline" onClick={() => setStep(2)} className="mt-4 w-full">Back to Quiz</Button>
+                <Button variant="outline" onClick={() => { setStep(2); setCurrentQuestionIndex(quizQuestions.length - 1); }} className="mt-4 w-full">Back to Quiz</Button>
             </div>
         );
       case 4:
@@ -173,6 +191,14 @@ export default function CreateTeenPage() {
         return null;
     }
   }
+  
+  const getStepNumber = () => {
+    if (step === 1) return 1;
+    if (step === 2) return 2;
+    if (step === 3) return 3;
+    if (step === 4) return 4;
+    return 1;
+  }
 
   return (
     <div className="container mx-auto p-4 sm:p-6 md:p-8 flex flex-col items-center">
@@ -186,7 +212,7 @@ export default function CreateTeenPage() {
                 <CardHeader>
                     <div className="flex justify-between items-center">
                         <CardTitle className="text-2xl">{getStepTitle()}</CardTitle>
-                        <span className="text-sm font-medium text-muted-foreground">Step {step} / {totalSteps}</span>
+                        <span className="text-sm font-medium text-muted-foreground">Step {getStepNumber()} / {totalSteps}</span>
                     </div>
                 </CardHeader>
                 <CardContent>
@@ -205,5 +231,3 @@ export default function CreateTeenPage() {
     </div>
   );
 }
-
-    
