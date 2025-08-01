@@ -67,9 +67,9 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
         {/* This is the card that will be downloaded */}
         <div 
           ref={cardRef} 
-          className="w-full max-w-3xl bg-gradient-to-br from-gray-950 via-blue-950 to-purple-900/50 rounded-2xl border border-primary/20 p-1 shadow-2xl"
+          className="w-full max-w-3xl bg-gradient-to-br from-gray-950 via-blue-950 to-purple-900/50 rounded-2xl border border-primary/20 p-1 shadow-2xl aspect-[9/16] flex flex-col"
         >
-            <div className="bg-background/80 backdrop-blur-sm rounded-xl p-6 sm:p-8">
+            <div className="bg-background/80 backdrop-blur-sm rounded-xl p-6 sm:p-8 flex flex-col flex-grow">
                 <header className="flex items-center justify-center pb-4 border-b border-border/50">
                     <div className="flex items-center space-x-2">
                         <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-500 rounded-full flex items-center justify-center font-bold text-white text-lg">
@@ -82,14 +82,14 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
                     </div>
                 </header>
 
-                <main className="my-6 sm:my-8">
-                    <div className="w-full rounded-lg overflow-hidden shadow-lg border border-border/50">
+                <main className="my-6 sm:my-8 flex flex-col items-center justify-center flex-grow">
+                    <div className="w-full rounded-lg overflow-hidden shadow-lg border border-border/50 aspect-[9/16]">
                         <Image
                             src={imageUrl}
                             alt={`AI generated image for ${name}`}
                             width={1024}
                             height={768}
-                            className="w-full h-auto"
+                            className="w-full h-full object-cover"
                             data-ai-hint="futuristic portrait"
                             unoptimized // Important for html2canvas to access the image
                         />
