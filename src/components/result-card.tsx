@@ -39,7 +39,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
           <p className="text-muted-foreground">Here's how {name} might look as a {profession || 'professional'}</p>
       </div>
 
-      <Card ref={cardRef} className="w-full max-w-md bg-black/30 bg-glass border-purple-500/20 shadow-2xl overflow-hidden">
+      <Card ref={cardRef} className="w-full max-w-lg bg-black/30 bg-glass border-purple-500/20 shadow-2xl overflow-hidden">
         <CardContent className="p-6">
             <div className="text-center mb-4">
                 <h3 className="text-xl font-bold text-primary">Chinnu as a {profession || 'Future Professional'}</h3>
@@ -75,7 +75,7 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
         </CardContent>
       </Card>
 
-      <div className="flex gap-4 w-full max-w-md">
+      <div className="flex gap-4 w-full max-w-lg">
         <Link href="/" className="w-full">
             <Button variant="outline" className="w-full h-12 text-base">
                 <RefreshCw className="mr-2 h-4 w-4" /> Start New Journey
