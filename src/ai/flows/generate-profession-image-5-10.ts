@@ -61,7 +61,7 @@ const generateProfessionImage5To10Flow = ai.defineFlow(
       ai.generate({
         model: 'googleai/gemini-2.0-flash-preview-image-generation',
         prompt: [
-          {text: `Generate a realistic image of the young student from the provided photo, but dressed as a ${input.profession}. It is crucial that the generated image retains the exact facial features and likeness of the student in the photo. The student's name is ${input.name}. The image should be high quality and show the student in an environment and attire suitable for the profession.`},
+          {text: `Your top priority is to generate a realistic image of the young student from the provided photo, but dressed as a ${input.profession}. The generated image MUST look exactly like the student in the photo. It is crucial that you retain the exact facial features and likeness of the student. Do not change their face. The student's name is ${input.name}. The image should be high quality and show the student in an environment and attire suitable for the profession.`},
           {media: {url: input.photoDataUri}},
         ],
         config: {
