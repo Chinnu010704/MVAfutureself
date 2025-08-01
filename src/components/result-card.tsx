@@ -5,9 +5,10 @@ import React, { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
-import { Download, RefreshCw, Sparkles, Briefcase } from 'lucide-react';
+import { Download, RefreshCw, Sparkles, Briefcase, Bot } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
+import { MainNav } from './main-nav';
 
 interface ResultCardProps {
   name: string;
@@ -31,61 +32,76 @@ export function ResultCard({ name, imageUrl, description, profession }: ResultCa
 
   return (
     <div className="flex flex-col items-center gap-8 w-full animate-fade-in">
-      <div className="text-center">
-          <div className="inline-block p-3 bg-primary/10 rounded-full mb-2">
-            <Sparkles className="w-8 h-8 text-primary" />
-          </div>
-          <h2 className="text-3xl font-bold text-white">{name}'s Future!</h2>
-          <p className="text-muted-foreground">Here's how {name} might look as a {profession || 'professional'}</p>
-      </div>
-
-      <Card ref={cardRef} className="w-full max-w-2xl bg-black/30 bg-glass border-purple-500/20 shadow-2xl overflow-hidden">
-        <CardContent className="p-6">
-            <div className="text-center mb-4">
-                <h3 className="text-xl font-bold text-primary">{name} as a {profession || 'Future Professional'}</h3>
-                <p className="text-sm text-muted-foreground">Look how amazing {name} looks as a {profession}</p>
+        <div className="w-full max-w-2xl text-center">
+            <div className="inline-block p-3 bg-primary/10 rounded-full mb-2">
+                <Sparkles className="w-8 h-8 text-primary" />
             </div>
-          
-            <div className="relative aspect-square w-full max-w-md mx-auto rounded-xl bg-muted/30 overflow-hidden flex items-center justify-center p-4 shadow-inner">
-                <Image
-                    src={imageUrl}
-                    alt={`AI generated image for ${name}`}
-                    fill
-                    className="object-cover"
-                    data-ai-hint="futuristic portrait"
-                />
-                 <div className="absolute top-4 right-4 p-3 bg-black/50 rounded-full backdrop-blur-sm">
-                    <Briefcase className="w-6 h-6 text-white"/>
-                </div>
-                <div className="absolute bottom-4 bg-black/50 backdrop-blur-sm px-4 py-2 rounded-xl text-center">
-                    <p className="text-white font-semibold">Your Future Self as a {profession}</p>
-                </div>
+            <h2 className="text-3xl font-bold text-white">Your Future Unlocked!</h2>
+            <p className="text-muted-foreground">Congratulations, {name}! Here is your AI-generated glimpse into a possible future.</p>
+        </div>
+
+        {/* This is the card that will be downloaded */}
+        <div ref={cardRef} className="w-full max-w-2xl bg-gradient-to-br from-gray-900 via-blue-950 to-purple-900/50 rounded-2xl border border-primary/20 p-1 shadow-2xl">
+            <div className="bg-background rounded-xl p-6 sm:p-8">
+                <header className="flex items-center justify-between pb-4 border-b border-border">
+                    <div className="flex items-center space-x-2">
+                        <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center font-bold text-white text-lg">
+                            MV
+                        </div>
+                        <span className="font-bold text-xl text-white flex items-center">
+                          MVAFutureSelf
+                          <Sparkles className="h-5 w-5 text-yellow-300 ml-1.5" />
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Bot size={16} />
+                        <span>AI Generated</span>
+                    </div>
+                </header>
+
+                <main className="my-8">
+                    <div className="relative aspect-[4/3] w-full rounded-lg bg-muted/30 overflow-hidden shadow-lg border border-border">
+                        <Image
+                            src={imageUrl}
+                            alt={`AI generated image for ${name}`}
+                            fill
+                            className="object-cover"
+                            data-ai-hint="futuristic portrait"
+                        />
+                         <div className="absolute top-4 right-4 p-3 bg-black/50 rounded-full backdrop-blur-sm border border-white/10">
+                            <Briefcase className="w-6 h-6 text-white"/>
+                        </div>
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-center">
+                            <h3 className="text-2xl font-bold text-white">{name}</h3>
+                            <p className="text-lg text-primary font-semibold">{profession || 'Future Professional'}</p>
+                        </div>
+                    </div>
+
+                    <div className="mt-8 text-left">
+                        <h4 className="font-bold text-xl text-white mb-2">Career Vision</h4>
+                        <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+                            <p className="text-base text-white/90">{description}</p>
+                        </div>
+                    </div>
+                </main>
+                
+                <footer className="text-center pt-4 border-t border-border">
+                    <p className="text-xs text-muted-foreground">Powered by Skill Satron Technologies Pvt.Ltd</p>
+                </footer>
             </div>
+        </div>
 
-            <div className="mt-6 text-center">
-                <h4 className="font-semibold text-white">Your Career Vision</h4>
-                <p className="text-sm text-muted-foreground">Based on your personality and interests</p>
-            </div>
 
-            <div className="mt-4 p-4 rounded-lg bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-purple-400/30">
-                <h5 className="font-bold text-primary mb-1">{profession}</h5>
-                <p className="text-sm text-white/80">{description}</p>
-            </div>
-
-        </CardContent>
-      </Card>
-
-      <div className="flex gap-4 w-full max-w-2xl">
-        <Link href="/" className="w-full">
-            <Button variant="outline" className="w-full h-12 text-base">
-                <RefreshCw className="mr-2 h-4 w-4" /> Start New Journey
+        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mt-4">
+            <Button variant="outline" className="w-full h-12 text-base" asChild>
+                <Link href="/">
+                    <RefreshCw className="mr-2 h-4 w-4" /> Start New Journey
+                </Link>
             </Button>
-        </Link>
-        <Button onClick={downloadCard} className="w-full h-12 text-base bg-gradient-button">
-          <Download className="mr-2 h-4 w-4" /> Download My Card
-        </Button>
+            <Button onClick={downloadCard} className="w-full h-12 text-base bg-gradient-button">
+              <Download className="mr-2 h-4 w-4" /> Download My Card
+            </Button>
       </div>
     </div>
   );
 }
-
