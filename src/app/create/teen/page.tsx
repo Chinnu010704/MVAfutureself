@@ -122,25 +122,27 @@ export default function CreateTeenPage() {
         );
       case 2:
         return (
-          <div className="space-y-6 animate-fade-in">
-            {quizQuestions.map((q, index) => (
-              <div key={index}>
-                <p className="font-medium mb-2">{index + 1}. {q.question}</p>
-                <RadioGroup onValueChange={(value) => handleQuizAnswer(index, value)} value={quizAnswers[index]} className="flex flex-col space-y-1">
-                  {q.options.map((option, optIndex) => (
-                    <FormItem key={optIndex} className="flex items-center space-x-3 space-y-0">
-                      <FormControl><RadioGroupItem value={option} /></FormControl>
-                      <FormLabel className="font-normal">{option}</FormLabel>
-                    </FormItem>
-                  ))}
-                </RadioGroup>
-              </div>
-            ))}
-            <div className='flex gap-4'>
-                <Button variant="outline" onClick={() => setStep(1)} className="w-full">Back</Button>
-                <Button onClick={submitQuiz} className="w-full">Next <ArrowRight className="ml-2"/></Button>
-            </div>
-          </div>
+          <Form {...form}>
+            <form onSubmit={e => { e.preventDefault(); submitQuiz(); }} className="space-y-6 animate-fade-in">
+                {quizQuestions.map((q, index) => (
+                  <div key={index}>
+                    <p className="font-medium mb-2">{index + 1}. {q.question}</p>
+                    <RadioGroup onValueChange={(value) => handleQuizAnswer(index, value)} value={quizAnswers[index]} className="flex flex-col space-y-1">
+                      {q.options.map((option, optIndex) => (
+                        <FormItem key={optIndex} className="flex items-center space-x-3 space-y-0">
+                          <FormControl><RadioGroupItem value={option} /></FormControl>
+                          <FormLabel className="font-normal">{option}</FormLabel>
+                        </FormItem>
+                      ))}
+                    </RadioGroup>
+                  </div>
+                ))}
+                <div className='flex gap-4 pt-4'>
+                    <Button variant="outline" onClick={() => setStep(1)} className="w-full">Back</Button>
+                    <Button type="submit" className="w-full">Next <ArrowRight className="ml-2"/></Button>
+                </div>
+            </form>
+          </Form>
         );
       case 3:
         return (
