@@ -18,12 +18,6 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
 
 export function HomePage() {
 
-  const handleStartJourney = () => {
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('mva-futureself-visited', 'true');
-    }
-  };
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 lg:p-24 animate-fade-in">
       <div className="w-full max-w-3xl mx-auto flex flex-col items-center text-center">
@@ -52,7 +46,7 @@ export function HomePage() {
             </div>
 
             <Link href="/start" passHref>
-              <Button onClick={handleStartJourney} size="lg" className="w-full max-w-xs mx-auto bg-gradient-button text-white font-bold text-lg rounded-xl h-14 shadow-lg shadow-purple-600/30 transition-all duration-300 transform hover:scale-105">
+              <Button size="lg" className="w-full max-w-xs mx-auto bg-gradient-button text-white font-bold text-lg rounded-xl h-14 shadow-lg shadow-purple-600/30 transition-all duration-300 transform hover:scale-105">
                 Start Your Journey <ArrowRight className="ml-2" />
               </Button>
             </Link>
