@@ -31,7 +31,7 @@ export function HomePage() {
               MVAFutureSelf
             </h1>
             <p className="mt-2 text-lg text-purple-300/80">
-              Powered by Skill Satron Technologies Pvt.Ltd
+              Powered by Skill Satron Tecnologies Pvt.Ltd
             </p>
           </CardHeader>
           <CardContent className="px-6 sm:px-10 pb-10">
